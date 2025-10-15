@@ -36,8 +36,7 @@ pipeline {
         stage('Ejecutar Terraform') {
             steps {
                 script {
-                    def tfvars = "-var='credentials_file=${env.GCP_KEY_FILE}' -var='project_id=${PROJECT_ID}' -var='region=${REGION}' -var='zone=${ZONE}'"
-                    
+                    def tfvars = "-var=\"credentials_content=${env.CREDENTIALS_JSON}\" -var=\"project_id=${PROJECT_ID}\" -var=\"region=${REGION}\" -var=\"zone=${ZONE}\""
                     if (params.ACTION == 'plan') {
                         sh "terraform plan ${tfvars} -out=tfplan"
                     } else if (params.ACTION == 'apply') {
