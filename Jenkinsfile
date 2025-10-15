@@ -18,7 +18,7 @@ pipeline {
     stages {
         stage('Preparar credenciales') {
             steps {
-                withCredentials([file(credentialsId: 'gcp-sa-key-peru', variable: 'GCP_KEY_FILE')]) { // Cambiado credencial para Perú
+                withCredentials([file(credentialsId: 'gcp-sa-key', variable: 'GCP_KEY_FILE')]) { // Cambiado credencial para Perú
                     script {
                         // Leer contenido del archivo JSON para pasarlo como variable a Terraform
                         env.CREDENTIALS_JSON = readFile(env.GCP_KEY_FILE).trim()
