@@ -1,5 +1,5 @@
 # terraform.tfvars - Perú
-project_id = "jenkins-terraform-demo-peru"
+project_id = "jenkins-terraform-demo"
 region     = "southamerica-west1"
 zone       = "southamerica-west1-a"
 instance_name = "oracle-db-peru"
