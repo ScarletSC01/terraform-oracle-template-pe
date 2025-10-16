@@ -36,6 +36,7 @@ pipeline {
         stage('Ejecutar Terraform') {
             steps {
                 script {
+                    writeFile file: 'gcp_key.json', text: env.CREDENTIALS_JSON
                     def tfvars = "-var=\"credentials_content=${env.CREDENTIALS_JSON}\" -var=\"project_id=${PROJECT_ID}\" -var=\"region=${REGION}\" -var=\"zone=${ZONE}\""
                     if (params.ACTION == 'plan') {
                         sh "terraform plan ${tfvars} -out=tfplan"
