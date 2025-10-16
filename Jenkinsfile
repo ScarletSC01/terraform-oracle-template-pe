@@ -11,7 +11,7 @@ pipeline {
 
         stage('Preparar credenciales') {
             steps {
-                withCredentials([file(credentialsId: 'GCP_KEY_FILE', variable: 'GCP_KEY_FILE')]) {
+                withCredentials([file(credentialsId: 'gcp-sa-key', variable: 'GCP_KEY_FILE')]) {
                     script {
                         CREDENTIALS_CONTENT = readFile(GCP_KEY_FILE)
                     }
