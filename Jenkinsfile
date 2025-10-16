@@ -36,14 +36,18 @@ pipeline {
         stage('Ejecutar Terraform') {
             steps {
                 script {
-                    writeFile file: 'gcp_key.json', text: env.CREDENTIALS_JSON
-                    def tfvars = "-var=\"credentials_content=${env.CREDENTIALS_JSON}\" -var=\"project_id=${PROJECT_ID}\" -var=\"region=${REGION}\" -var=\"zone=${ZONE}\""
-                    if (params.ACTION == 'plan') {
-                        sh "terraform plan ${tfvars} -out=tfplan"
-                    } else if (params.ACTION == 'apply') {
-                        sh "terraform apply -auto-approve ${tfvars}"
-                    } else if (params.ACTION == 'destroy') {
-                        sh "terraform destroy -auto-approve ${tfvars}"
+                   // Guardar el contenido del JSON de credenciales en un archivo temporal
+            writeFile file: 'credentials.json', text: CREDENTIALS_CONTENT
+
+            // Ejecutar Terraform con el archivo de credenciales
+            sh """
+                terraform plan \
+                  -var="credentials_content=\$(cat credentials.json)" \
+                  -var="project_id=${PROJECT_ID}" \
+                  -var="region=${REGION}" \
+                  -var="zone=${ZONE}" \
+                  -out=tfplan
+            """
                     }
                 }
             }
